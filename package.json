@@ -1,0 +1,28 @@
+{
+  "name": "byui-cse340",
+  "version": "1.0.0",
+  "description": "univerity project",
+  "homepage": "https://github.com/helamacorrea/BYUI-CSE340#readme",
+  "bugs": {
+    "url": "https://github.com/helamacorrea/BYUI-CSE340/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/helamacorrea/BYUI-CSE340.git"
+  },
+  "license": "ISC",
+  "author": "Helama Correa",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "dev": "nodemon",
+    "start": "node server.js"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  },
+  "dependencies": {
+    "ejs": "^6.0.1",
+    "express": "^5.2.1"
+  }
+}
