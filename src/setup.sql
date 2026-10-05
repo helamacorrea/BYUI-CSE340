@@ -24,6 +24,19 @@ CREATE TABLE project (
 	FOREIGN KEY (organization_id) REFERENCES organization (organization_id)
 );
 
+CREATE TABLE category (
+	category_id SERIAL PRIMARY KEY,
+	name VARCHAR(20) NOT NULL
+);
+
+CREATE TABLE category_has_project (
+	category_id INT,
+	project_id INT, 
+	PRIMARY KEY (category_id, project_id),
+	FOREIGN KEY (category_id) REFERENCES category (category_id),
+	FOREIGN KEY (project_id) REFERENCES project (project_id),
+);
+
 INSERT INTO project
     (organization_id, title, description, location, date)
 VALUES
@@ -127,7 +140,38 @@ VALUES
  '2026-12-05');
 
 
+INSERT INTO category (name)
+VALUES ('Construction'), ('Environment'), ('Community');
 
+INSERT INTO category_has_project (category_id, project_id)
+VALUES
+-- Construction
+(1, 1),
+(1, 2),
+(1, 3),
+(1, 5),
+
+-- Environment
+(2, 4),
+(2, 6),
+(2, 7),
+(2, 8),
+(2, 9),
+(2, 10),
+
+-- Community
+(3, 1),
+(3, 3),
+(3, 4),
+(3, 6),
+(3, 8),
+(3, 9),
+(3, 10),
+(3, 11),
+(3, 12),
+(3, 13),
+(3, 14),
+(3, 15);
 
 
 
