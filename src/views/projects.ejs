@@ -5,7 +5,7 @@
         <p>Here are our upcoming service projects:</p>
         <ul>
             <% projects.forEach(project => { %>
-                <li><%= project.date %>: <%= project.title %> (<%= project.org_name %>)</li>
+                <li><%= new Date(project.date).toLocaleDateString('pt-BR') %>: <strong><%= project.title %></strong> (<%= project.org_name %>)</li>
             <% }); %>
         </ul>
     </main>
