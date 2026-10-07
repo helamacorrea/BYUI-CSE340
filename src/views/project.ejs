@@ -7,6 +7,12 @@
     <p>Date: <%= new Date(projectDetails.date).toLocaleDateString('pt-BR') %></p>
     <p>Location: <%= projectDetails.location %></p>
     <p>Partner Organization: <a href="/organization/<%= projectDetails.organization_id %>"><%= projectDetails.organization_name %></a></p>
+    <h2>Categories</h2>
+    <ul>
+        <% projectCategories.forEach(category => { %>
+        <li><a href="/category/<%= category.category_id %>"><%= category.name %></a></li>
+        <% }); %>    
+    </ul>
 
 </main>
 <%- include('partials/footer') %>
