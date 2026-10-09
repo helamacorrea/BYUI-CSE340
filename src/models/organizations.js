@@ -71,11 +71,11 @@ const updateOrganization = async (organizationId, name, description, contactEmai
     const result = await db.query(query, queryParams);
 
     if (result.rows.length === 0) {
-        throw new Error('Failed to create organization');
+        throw new Error('Failed to update organization');
     }
 
     if (process.env.ENABLE_SQL_LOGGING === 'true') {
-        console.log('Created new organization with ID:', result.rows[0].organization_id);
+        console.log('Updated organization with ID:', result.rows[0].organization_id);
     }
 
     return result.rows[0].organization_id;
