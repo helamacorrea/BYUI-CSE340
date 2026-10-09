@@ -8,6 +8,7 @@
     <p>Location: <%= projectDetails.location %></p>
     <p>Partner Organization: <a href="/organization/<%= projectDetails.organization_id %>"><%= projectDetails.organization_name %></a></p>
     <h2>Categories</h2>
+    <a href="/assign-categories/<%= projectId %>">Edit Categories</a>
     <ul>
         <% projectCategories.forEach(category => { %>
         <li><a href="/category/<%= category.category_id %>"><%= category.name %></a></li>

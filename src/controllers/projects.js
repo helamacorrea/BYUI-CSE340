@@ -38,7 +38,7 @@ const showProjectDetailsPage = async (req, res) => {
     const projectCategories = await getAllCategoriesOfProject(projectId)
     const title = "Project Details";
 
-    res.render('project', {title, projectDetails, projectCategories });
+    res.render('project', {title, projectDetails, projectCategories, projectId });
 };
 
 const showNewProjectForm = async (req, res) => {
