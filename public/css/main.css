@@ -230,32 +230,129 @@ footer p {
     margin: 0;
 }
 
-/* Flash message styles */
-.alert {
-    padding: 15px;
-    margin-bottom: 20px;
-    border: 1px solid transparent;
-    border-radius: 4px;
+/* Forms */
+form {
+  width: 100%;
+  max-width: 550px;
+  margin-top: 25px;
 }
-.alert.success {
-    color: #155724;
-    background-color: #d4edda;
-    border-color: #c3e6cb;
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
 }
-.alert.error {
-    color: #721c24;
-    background-color: #f8d7da;
-    border-color: #f5c6cb;
+
+.form-group label {
+  font-weight: 600;
+  font-size: 15px;
+  margin-bottom: 8px;
+  color: #243b53;
 }
-.alert.warning {
-    color: #856404;
-    background-color: #fff3cd;
-    border-color: #ffeeba;
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+  width: 100%;
+  padding: 12px 14px;
+  font-size: 16px;
+  font-family: inherit;
+  color: #243b53;
+  background: #fff;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  box-sizing: border-box;
+  transition: border-color 0.2s, box-shadow 0.2s;
 }
-.alert.info {
-    color: #0c5460;
-    background-color: #d1ecf1;
-    border-color: #bee5eb;
+
+.form-group textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: #149c91;
+  box-shadow: 0 0 0 3px rgba(20, 156, 145, 0.12);
+}
+
+form button[type="submit"] {
+  padding: 12px 24px;
+  background: #003b63;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  font-family: inherit;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+form button[type="submit"]:hover {
+  background: #005487;
+}
+
+/* Flash notifications */
+.flash-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 10px auto 0;
+  padding: 0 20px;
+  box-sizing: border-box;
+}
+
+.flash-alert {
+  padding: 16px 20px;
+  margin-bottom: 12px;
+  border-radius: 8px;
+  border-left: 5px solid;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.5;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Success */
+.flash-success {
+  background: #e8f7ef;
+  color: #176b42;
+  border-color: #28a745;
+}
+
+/* Error */
+.flash-error,
+.flash-danger {
+  background: #fdecec;
+  color: #a12626;
+  border-color: #dc3545;
+}
+
+/* Warning */
+.flash-warning {
+  background: #fff8e1;
+  color: #856404;
+  border-color: #ffc107;
+}
+
+/* Information */
+.flash-info {
+  background: #e8f4fd;
+  color: #155a8a;
+  border-color: #2196f3;
+}
+
+.flash-container:not(:has(.flash-alert)) {
+  display: none;
+}
+
+/* Reduce spacing when a flash alert is visible */
+.flash-container:has(.flash-alert) + main {
+  padding-top: 10px;
 }
 
 /* ---------- Responsive ---------- */
@@ -277,5 +374,13 @@ footer p {
 
     main ul li {
         padding: var(--space-sm);
+    }
+
+    form {
+        max-width: 100%;
+    }
+
+    form button[type="submit"] {
+        width: 100%;
     }
 }

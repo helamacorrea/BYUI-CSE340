@@ -2,7 +2,9 @@
     <main>
         <h1><%= title %></h1>
         <h2><%= categoryName.name %></h2>
-        <p>Projects in this category:</p>
+        <a href="/edit-category/<%= categoryId %>">Edit Category Name</a>
+
+        <h3><br><br>Projects in this category:</h3>
         <ul>
             <% projectsOfCategory.forEach(project => { %>
                 <li><a href="/project/<%= project.project_id %>"><strong><%= project.title %></strong></a></li>
