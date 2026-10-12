@@ -7,9 +7,9 @@ const categoryValidation = [
     body('name')
         .trim()
         .notEmpty()
-        .withMessage('Organization name is required')
+        .withMessage('Category name is required')
         .isLength({ min: 3, max: 100 })
-        .withMessage('Organization name must be between 3 and 100 characters')
+        .withMessage('Category name must be between 3 and 100 characters')
 ];
 
 const showCategoriesPage = async (req, res) => {
@@ -71,7 +71,7 @@ const processNewCategoryForm = async (req, res) => {
         return res.redirect('/new-category');
     }
 
-    const categoryName = req.body.name || [];
+    const categoryName = req.body.name || "";
     const categoryId = await createCategory(categoryName);
 
     req.flash('success', 'Category created successfully!');
