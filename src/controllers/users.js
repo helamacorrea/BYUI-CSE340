@@ -32,8 +32,8 @@ const registerValidation = [
     body('password')
         .notEmpty()
         .withMessage('Password is required')
-        .isLength({ min: 8, max: 30 })
-        .withMessage('Password must be between 8 - 30 characters'),
+        .isLength({ min: 7, max: 30 })
+        .withMessage('Password must be between 7 - 30 characters'),
 ];
 
 
@@ -94,6 +94,9 @@ const processLogout = async (req, res) => {
 
 const requireLogin = async (req, res, next) => {
     if (req.session.user) {
+        if (res.locals.NODE_ENV === 'development') {
+            console.log('requireLogin req.session.user:', req.session.user);
+        }
         next();
     } else {
         req.flash('error', 'You must be logged in to access that page.');
@@ -110,4 +113,21 @@ const showDashboard = (req, res) => {
     });
 };
 
-export { showUserRegistrationForm, processUserRegistrationForm, registerValidation, processLoginForm, showLoginForm, processLogout, requireLogin, showDashboard }
+const requireRole = (role) => {
+    return (req, res, next) => {
+        // Check if user is logged in first
+        if (!req.session || !req.session.user) {
+            req.flash('error', 'You must be logged in to access this page.');
+            return res.redirect('/login');
+        }
+        // Check if user's role matches the required role
+        if (req.session.user.role_name !== role) {
+            req.flash('error', 'You do not have permission to access this page.');
+            return res.redirect('/');
+        }
+        // User has required role, continue
+        next();
+    };
+};
+
+export { showUserRegistrationForm, processUserRegistrationForm, registerValidation, processLoginForm, showLoginForm, processLogout, requireLogin, showDashboard, requireRole }

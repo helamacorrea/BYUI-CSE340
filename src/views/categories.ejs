@@ -1,10 +1,19 @@
 <%- include('partials/header') %>
     <main>
         <h1><%= title %></h1>
-        <br><a href="/new-category">Create New Category</a>
+        <br>
+        <% if (user && user.role_name === 'admin') { %>
+        <a href="/new-category">Create New Category</a>
+        <% } %>
         <ul>
             <% categories.forEach(category => { %>
-                <li><a href="/category/<%= category.category_id %>"><strong><%= category.name %></strong></a><a href="/edit-category/<%= category.category_id %>">Edit</a></li>
+                <li>
+                    <a href="/category/<%= category.category_id %>">
+                    <strong><%= category.name %></strong></a>
+                    <% if (user && user.role_name === 'admin') { %>
+                        <a href="/edit-category/<%= category.category_id %>">Edit</a>
+                    <% } %>
+                    </li>
             <% }); %>
         </ul>
     </main>
