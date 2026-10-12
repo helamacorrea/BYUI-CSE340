@@ -1,5 +1,5 @@
 import bcrypt from 'bcrypt';
-import { createUser } from '../models/users.js';
+import { createUser, authenticateUser } from '../models/users.js';
 import { body, validationResult } from 'express-validator';
 import db from '../models/db.js';
 
@@ -54,7 +54,6 @@ const processUserRegistrationForm = async (req, res) => {
     }    
 
     const saltRounds = 10;
-    console.log(req.body);
     const { name, email, password } = req.body;
     const passwordHash = await bcrypt.hash(password, saltRounds);
 
@@ -64,4 +63,33 @@ const processUserRegistrationForm = async (req, res) => {
     res.redirect('/');
 }
 
-export { showUserRegistrationForm, processUserRegistrationForm, registerValidation }
+const showLoginForm = async (req, res) => {
+    const title = "Login";
+    res.render('login', { title });
+}
+
+const processLoginForm = async (req, res) => {
+    const { email, password } = req.body;
+    const user = await authenticateUser(email, password);
+    if (user) {
+        req.session.user = user;
+        req.flash('success', 'Login Successful!');
+        if (res.locals.NODE_ENV === 'development') {
+            console.log('User logged in:', user);
+        }
+        res.redirect('/');
+    } else {
+        req.flash('error', 'Invalid email or password');
+        res.redirect('/login');
+    }
+}
+
+const processLogout = async (req, res) => {
+    if (req.session.user) {
+        delete req.session.user;
+    }
+    req.flash('success', 'Logout successful!');
+    res.redirect('/login');
+};
+
+export { showUserRegistrationForm, processUserRegistrationForm, registerValidation, processLoginForm, showLoginForm, processLogout }

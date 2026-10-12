@@ -6,7 +6,7 @@ import { showOrgPage } from "./controllers/organizations.js";
 import { showProjectsPage, showProjectDetailsPage, showNewProjectForm, processNewProjectForm, projectValidation, showEditProjectForm, processEditProjectForm } from "./controllers/projects.js";
 import { testErrorPage } from "./controllers/errors.js";
 import { showOrganizationDetailsPage, showNewOrganizationForm, processNewOrganizationForm, organizationValidation, showEditOrganizationForm, processEditOrganizationForm } from './controllers/organizations.js';
-import { showUserRegistrationForm, processUserRegistrationForm, registerValidation } from './controllers/users.js';
+import { showUserRegistrationForm, processUserRegistrationForm, registerValidation, processLoginForm, showLoginForm, processLogout } from './controllers/users.js';
 
 const router = express.Router();
 
@@ -38,6 +38,11 @@ router.post('/edit-category/:id', categoryValidation, processEditCategoryForm);
 
 router.get('/register', showUserRegistrationForm);
 router.post('/register', registerValidation, processUserRegistrationForm);
+
+//processLoginForm, showLoginForm, processLogout
+router.get('/login', showLoginForm);
+router.post('/login', processLoginForm);
+router.post('/logout', processLogout);
 
 
 // error testing
