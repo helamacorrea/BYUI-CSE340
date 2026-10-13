@@ -58,5 +58,15 @@ const authenticateUser = async (email, password) => {
         return null;
     }
 }
-export {createUser, authenticateUser};
+
+const getUsersList = async () => {
+    const query = `
+        SELECT name, email, role_name FROM users JOIN roles ON users.role_id = roles.role_id;
+    `;
+    const result = await db.query(query);
+
+    return result.rows;
+}
+
+export {createUser, authenticateUser, getUsersList};
 

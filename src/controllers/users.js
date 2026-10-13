@@ -1,5 +1,5 @@
 import bcrypt from 'bcrypt';
-import { createUser, authenticateUser } from '../models/users.js';
+import { createUser, authenticateUser, getUsersList } from '../models/users.js';
 import { body, validationResult } from 'express-validator';
 import db from '../models/db.js';
 
@@ -130,4 +130,13 @@ const requireRole = (role) => {
     };
 };
 
-export { showUserRegistrationForm, processUserRegistrationForm, registerValidation, processLoginForm, showLoginForm, processLogout, requireLogin, showDashboard, requireRole }
+const showAdminDashboard = async (req, res) => {
+    const title = "Admin Dashboard";
+    const usersList = await getUsersList();
+    if (res.locals.NODE_ENV === 'development') {
+        console.log('Users List:', usersList);
+    }    
+    res.render('admin-dashboard', { title, usersList});
+};
+
+export { showUserRegistrationForm, processUserRegistrationForm, registerValidation, processLoginForm, showLoginForm, processLogout, requireLogin, showDashboard, requireRole, showAdminDashboard }
