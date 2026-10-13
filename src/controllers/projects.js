@@ -1,6 +1,7 @@
 import { getAllProjects, getUpcomingProjects, getProjectDetails, getAllCategoriesOfProject, createProject, updateProject } from '../models/projects.js'
 import { getAllOrganizations } from '../models/organizations.js'
 import { body, validationResult } from 'express-validator';
+import { addVolunteer, removeVolunteer, getVolunteerProjectsOfUser, isVolunteerOfProject } from '../models/users.js';
 
 const NUMBER_OF_UPCOMING_PROJECTS = 5;
 
@@ -34,11 +35,13 @@ const showProjectsPage = async (req, res) => {
 
 const showProjectDetailsPage = async (req, res) => {
     const projectId = req.params.id;
+    const userId = req.session.user?.user_id || null;
     const projectDetails = await getProjectDetails(projectId);
     const projectCategories = await getAllCategoriesOfProject(projectId)
     const title = "Project Details";
+    const isProjectVolunteer = await isVolunteerOfProject(userId, projectId);
 
-    res.render('project', {title, projectDetails, projectCategories, projectId });
+    res.render('project', {title, projectDetails, projectCategories, projectId, isProjectVolunteer });
 };
 
 const showNewProjectForm = async (req, res) => {
@@ -93,5 +96,32 @@ const processEditProjectForm = async (req, res) => {
     res.redirect(`/project/${projectId}`);
 }
 
+const processVolunteerToProject = async (req, res) => {
+    const userId = req.session.user.user_id;
+    const projectId = req.params.id;
+    await addVolunteer(userId, projectId);
+    req.flash('success', 'You are now volunteering for this project');
+    res.redirect(`/project/${projectId}`);
+}
 
-export { showProjectsPage, showProjectDetailsPage, showNewProjectForm, processNewProjectForm, projectValidation, showEditProjectForm, processEditProjectForm }
+const processWithdrawFromProject = async (req, res) => {
+    const userId = req.session.user.user_id;
+    const projectId = req.params.id;
+    await removeVolunteer(userId, projectId);
+    req.flash('success', 'You are not volunteering for this project anymore');
+
+    const currentPage = req.get('Referer');
+    const fallback = `/project/${projectId}`;
+    let redirectTo = fallback;
+
+    const pathname = new URL(currentPage).pathname;
+
+    if (pathname === '/dashboard' || pathname === fallback) {
+        redirectTo = pathname;
+    }
+
+    res.redirect(redirectTo);
+}
+
+
+export { showProjectsPage, showProjectDetailsPage, showNewProjectForm, processNewProjectForm, projectValidation, showEditProjectForm, processEditProjectForm, processVolunteerToProject, processWithdrawFromProject }

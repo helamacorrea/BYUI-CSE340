@@ -200,3 +200,10 @@ VALUES
 ('test_user', 'user@test.com', '123password', 1),
 ('test_admin', 'admin@test.com', '123password', 2);
 
+CREATE TABLE project_has_users (
+	user_id INTEGER,
+	project_id INTEGER, 
+	PRIMARY KEY (user_id, project_id),
+	FOREIGN KEY (user_id) REFERENCES users (user_id),
+	FOREIGN KEY (project_id) REFERENCES project (project_id)
+);

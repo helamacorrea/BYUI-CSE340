@@ -4,8 +4,20 @@
 
     <h2><%= projectDetails.title %></h2>
     <% if (user && user.role_name === 'admin') { %>
-    <p><a href="/edit-project/<%= projectDetails.project_id %>">Edit Project Details</a></p>
+    <p><a href="/edit-project/<%= projectDetails.project_id %>" >Edit Project Details</a></p>
     <% } %>
+    <% if (isLoggedIn && !isProjectVolunteer) { %>
+        <p><a href="#" onclick="event.preventDefault(); document.getElementById('volunteer-form').requestSubmit();"
+            >Volunteer to this project</a></p>
+            <form id="volunteer-form" action="/volunteer-to-project/<%= projectDetails.project_id %>" method="POST" hidden></form>
+    <% } %>
+    <% if (isLoggedIn && isProjectVolunteer) { %>
+        <p>You are volunteering fot this project</p>
+        <p><a href="#" onclick="event.preventDefault(); document.getElementById('withdraw-form').requestSubmit();"
+            >Withdraw from this project</a></p>
+            <form id="withdraw-form" action="/withdraw-from-project/<%= projectDetails.project_id %>" method="POST" hidden></form>
+    <% } %>
+
     <p>Description: <%= projectDetails.description %></p>
     <p>Date: <%= new Date(projectDetails.date).toLocaleDateString('pt-BR') %></p>
     <p>Location: <%= projectDetails.location %></p>

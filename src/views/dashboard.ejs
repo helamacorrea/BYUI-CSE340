@@ -5,10 +5,24 @@
 
     <p>Name: <%= name %></p>
     <p>Username: <%= email %></p>
-
+    <br>
     <% if (user && user.role_name === 'admin') { %>
         <p><a href="/admin-dashboard">Users List</a></p>
     <% } %>
+    <h2>Your Volunteer Projecs</h2> 
+    <ul>
+        <% if (volunteerProjects.length > 0) { %>
+            <% volunteerProjects.forEach(project => { %>
+            <li><%= project.title %> 
+                <a href="#" onclick="event.preventDefault(); document.getElementById('remove-form').requestSubmit();"
+                >Remove</a>
+                <form id="remove-form" action="/withdraw-from-project/<%= project.project_id %>" method="POST" hidden></form>
+            </li>
+            <% }); %>
+        <% } else { %>
+            <p>You have no service projects yet.</p>
+        <% } %>
+    </ul>
 </main>
 
 <%- include('partials/footer') %>

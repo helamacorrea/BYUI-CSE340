@@ -3,7 +3,7 @@ import express from 'express';
 import { showHomePage } from "./controllers/index.js";
 import { showCategoriesPage, showCategoryDetais, showAssignCategoriesForm, processAssignCategoriesForm, showEditCategoryForm, showNewCategoryForm, processNewCategoryForm, categoryValidation, processEditCategoryForm } from "./controllers/categories.js";
 import { showOrgPage } from "./controllers/organizations.js";
-import { showProjectsPage, showProjectDetailsPage, showNewProjectForm, processNewProjectForm, projectValidation, showEditProjectForm, processEditProjectForm } from "./controllers/projects.js";
+import { showProjectsPage, showProjectDetailsPage, showNewProjectForm, processNewProjectForm, projectValidation, showEditProjectForm, processEditProjectForm,  processVolunteerToProject, processWithdrawFromProject } from "./controllers/projects.js";
 import { testErrorPage } from "./controllers/errors.js";
 import { showOrganizationDetailsPage, showNewOrganizationForm, processNewOrganizationForm, organizationValidation, showEditOrganizationForm, processEditOrganizationForm } from './controllers/organizations.js';
 import { showUserRegistrationForm, processUserRegistrationForm, registerValidation, processLoginForm, showLoginForm, processLogout, showDashboard, requireLogin, requireRole, showAdminDashboard } from './controllers/users.js';
@@ -45,6 +45,9 @@ router.post('/logout', processLogout);
 
 router.get('/dashboard', requireLogin, showDashboard);
 router.get('/admin-dashboard', requireRole('admin'), showAdminDashboard);
+
+router.post('/volunteer-to-project/:id', requireLogin, processVolunteerToProject);
+router.post('/withdraw-from-project/:id', requireLogin, processWithdrawFromProject);
 
 
 // error testing
